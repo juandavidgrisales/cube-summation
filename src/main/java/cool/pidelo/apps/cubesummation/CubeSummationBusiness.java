@@ -18,7 +18,8 @@ import java.util.TreeMap;
  */
 public class CubeSummationBusiness {
     
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public CubeSummationBusiness () throws FileNotFoundException, IOException {
+        
         BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         //BufferedReader b = new BufferedReader(new FileReader("test1.txt"));
         
