@@ -41,7 +41,7 @@ public class CubeSummationAPI {
         TCase[] tCases = cubeSummationService.testCases(input);
         List<Long> results = new ArrayList<>();
         for (TCase tCase : tCases) {
-            results.add(tCase.getResult());
+            results.addAll(tCase.getQueryResults());
         }
         return results;
     }

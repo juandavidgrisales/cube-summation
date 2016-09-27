@@ -5,6 +5,8 @@
  */
 package cool.pidelo.apps.cubesummation.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -17,13 +19,15 @@ public class TCase {
     private Operation[] operations;
     private Map<Byte, Map<Byte,Map<Byte, Long>>> cube = new TreeMap<>();
     private Byte dimension;
-    private Long result = new Long(0);
+    private List<Long> queryResults;
 
     public TCase(final short mOperations) {
+        this.queryResults = new ArrayList<>();
         operations = new Operation[mOperations];
     }
     
     public TCase() {
+        this.queryResults = new ArrayList<>();
     }
     
     /**
@@ -120,8 +124,8 @@ public class TCase {
      *
      * @return the result
      */
-    public Long getResult() {
-        return this.result;
+    public List<Long> getQueryResults() {
+        return this.queryResults;
     }
 
     /**
@@ -227,7 +231,4 @@ public class TCase {
      * increment result with value
      * @param sum
      */
-    public void plusToResult(long sum) {
-        this.result += sum;
-    }
 }

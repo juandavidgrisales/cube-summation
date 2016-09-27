@@ -36,36 +36,37 @@ public class CubeSummationServiceImpl implements CubeSummationService {
         TCase[] tCases = new TCase[((Byte)Byte.parseByte(b.readLine()))];
         
         if (isValidTCases(tCases.length)) {
-            for (TCase tCase : tCases) {
+            for (int i = 0; i < tCases.length; i++) {
                 
-                tCase = new TCase();
-                tCase.setConditions(b.readLine().split(" "));
+                tCases[i] = new TCase();
+                tCases[i].setConditions(b.readLine().split(" "));
 
-                if(tCase.isCubeSizeValid() && tCase.isOperationsLengthValid())
-                for (Operation operation : tCase.getOperations()) {
+                if(tCases[i].isCubeSizeValid() && tCases[i].isOperationsLengthValid())
+                for (int j = 0; j < tCases[i].getOperations().length; j++) {
                     
-                    operation = new Operation();
+                    tCases[i].getOperations()[j] = new Operation();
+                    Operation operation = tCases[i].getOperations()[j];
                     operation.setValues(b.readLine().split(" "));
                     
                     switch (operation.getOperationType()) {
                         case UPDATE:
-                            if(tCase.areDimensionsValid(operation) && tCase.isUpdateValueValid(operation)) {
+                            if(tCases[i].areDimensionsValid(operation) && tCases[i].isUpdateValueValid(operation)) {
                                 
-                                if (tCase.existXOnCube(operation.getX1())){
-                                    if (tCase.existXYOnCube(operation.getX1(),operation.getY1())){
-                                        if (tCase.existXYZOnCube(operation.getX1(), operation.getY1(),operation.getZ1())){
-                                            tCase.replaceValueToCube(operation.getX1(), operation.getY1(), operation.getZ1(), operation.getW());
+                                if (tCases[i].existXOnCube(operation.getX1())){
+                                    if (tCases[i].existXYOnCube(operation.getX1(),operation.getY1())){
+                                        if (tCases[i].existXYZOnCube(operation.getX1(), operation.getY1(),operation.getZ1())){
+                                            tCases[i].replaceValueToCube(operation.getX1(), operation.getY1(), operation.getZ1(), operation.getW());
                                         }else {
-                                            tCase.setValueToCube(operation.getX1(), operation.getY1(), operation.getZ1(), operation.getW());
+                                            tCases[i].setValueToCube(operation.getX1(), operation.getY1(), operation.getZ1(), operation.getW());
                                         }
                                     } else {
-                                        tCase.addYtoCube(operation.getX1(), operation.getY1());
-                                        tCase.setValueToCube(operation.getX1(), operation.getY1(), operation.getZ1(), operation.getW());
+                                        tCases[i].addYtoCube(operation.getX1(), operation.getY1());
+                                        tCases[i].setValueToCube(operation.getX1(), operation.getY1(), operation.getZ1(), operation.getW());
                                     }
                                 } else {
-                                    tCase.addXtoCube(operation.getX1());
-                                    tCase.addYtoCube(operation.getX1(), operation.getY1());
-                                    tCase.setValueToCube(operation.getX1(), operation.getY1(), operation.getZ1(), operation.getW());
+                                    tCases[i].addXtoCube(operation.getX1());
+                                    tCases[i].addYtoCube(operation.getX1(), operation.getY1());
+                                    tCases[i].setValueToCube(operation.getX1(), operation.getY1(), operation.getZ1(), operation.getW());
                                 }
                                 
                             }
@@ -73,9 +74,9 @@ public class CubeSummationServiceImpl implements CubeSummationService {
                             
                         case QUERY:
                             long  sum = 0;
-                            if (tCase.areDimensionsValid(operation)) {
+                            if (tCases[i].areDimensionsValid(operation)) {
 
-                                for (Map.Entry<Byte, Map<Byte,Map<Byte, Long>>> xElement : tCase.getCube().entrySet()) {
+                                for (Map.Entry<Byte, Map<Byte,Map<Byte, Long>>> xElement : tCases[i].getCube().entrySet()) {
                                     if (xElement.getKey().byteValue() >= operation.getX1() && xElement.getKey().byteValue() <= operation.getX2()){
                                         for (Map.Entry<Byte, Map<Byte, Long>> yElement : xElement.getValue().entrySet()) {
                                             if (yElement.getKey().byteValue() >= operation.getY1() && yElement.getKey().byteValue() <= operation.getY2()){
@@ -88,7 +89,7 @@ public class CubeSummationServiceImpl implements CubeSummationService {
                                         }
                                     }                        
                                 }
-                                tCase.plusToResult(sum);
+                                tCases[i].getQueryResults().add(sum);
                             }
                             break;
                             
